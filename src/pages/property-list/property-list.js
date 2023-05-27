@@ -95,5 +95,4 @@ onSubmitForm('search-button', () => {
     getPropertyList(queryParams).then(propertyList => { // No entiendo
         loadPropertyList(propertyList);
     });
-    console.log({filter});
 });
