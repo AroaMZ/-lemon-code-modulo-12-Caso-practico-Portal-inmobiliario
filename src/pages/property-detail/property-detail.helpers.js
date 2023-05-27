@@ -7,7 +7,6 @@ export const mapEquipments = (equipmentIds, equipmentMap) => {
       }
     })
   })
-
   return equipments 
 
 }
@@ -15,7 +14,6 @@ export const mapEquipments = (equipmentIds, equipmentMap) => {
 
 const setMainFeatures = property => {
   const list = document.getElementById('mainFeatures');
-
   property.mainFeatures.forEach(mainFeature => {
     const li = document.createElement('li');
     li.textContent = mainFeature;
@@ -124,5 +122,21 @@ export const setPropertyValues = property => {
   setImages(property);
 };
 
-//
+// Los he puesto yo
+export const onUpdateField = (id, callback) => {
+  const element = document.getElementById(id);
+  element.oninput = event => callback(event);
+
+  if (element.type !== 'checkbox') {
+    element.onblur = event => callback(event);
+  }
+};
+
+export const onSubmitForm = (id, callback) => {
+  const element = document.getElementById(id);
+  element.onclick = e => {
+    e.preventDefault();
+    callback();
+  };
+};
 
