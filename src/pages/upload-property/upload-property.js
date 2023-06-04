@@ -67,9 +67,12 @@ onUpdateField('add-image', () => {
   let file = document.getElementById('add-image').files[0];
   let reader = new FileReader();
 
-  let image = reader.readAsDataURL(file);
-  onAddImage(image);
-  console.log(image);
+  reader.readAsDataURL(file);
+  reader.onloadend = function() {
+    let image = reader.result
+    onAddImage(image);
+  }
+
 });
 onUpdateField('title', (event) => {
   const value = event.target.value;
@@ -261,14 +264,28 @@ const setMainFeatureValues = () => {
     featuresArray.push(element.textContent);
   });
 
-  houseProperties = {
+  houseProperties = {        
     ...houseProperties,
     mainFeatures: featuresArray,
   };
 };
 
+const setImages = () => {
+  let images = Array.from(document.getElementsByClassName('add_img'));
+  let imagesArray = [];
+  images.forEach((element) => {
+    imagesArray.push(element.firstChild.src);
+  });
+
+  houseProperties = {        
+    ...houseProperties,
+    images: imagesArray,
+  };
+};
+
 onSubmitForm('save-button', () => {
   setMainFeatureValues();
+  setImages();
   formValidation.validateForm(houseProperties).then((result) => {
     onSetFormErrors(result);
     if (result.succeeded == true) {
